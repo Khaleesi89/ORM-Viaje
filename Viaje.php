@@ -80,8 +80,8 @@
             $this->codigoViaje = 0;
             $this->destino = "";
             $this->capacidadPasajeros = "";
-            $this->objEmpresa = '';
-            $this->objResponsable = '';
+            $this->objEmpresa = new Empresa;
+            $this->objResponsable = new Responsable;
             $this->importe = "";
             $this->tipoAsiento = "";
             $this->idayvuelta = "";
@@ -186,7 +186,7 @@
             return $arrayViaje;
         }
 
-        
+       
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
@@ -194,13 +194,14 @@
                                 VALUES ('".$this->getCodigoViaje()."',
                                         '".$this->getDestino()."',
                                         '".$this->getCapacidadPasajeros()."',
-                                        '".$this->getObjEmpresa()."',
-                                        '".$this->getObjResponsable()."',
+                                        '".$this->getObjEmpresa()->getIdEmpresa()."',
+                                        '".$this->getObjResponsable()->getNroEmpleado()."',
                                         '".$this->getImporte()."',
                                         '".$this->getTipoAsiento()."',
                                         '".$this->getIdayvuelta()."')";
                                         //'".$this->getObjEmpresa()->getIdEmpresa()."',
                                         //'".$this->getObjResponsable()->getNroEmpleado()."',
+                                                                     
             if ($base->Iniciar()) {
                 if ($base->Ejecutar($consultaInsertar)) {
                     echo $this->setCodigoViaje($base->DevolverID()); //(!)
