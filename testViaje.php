@@ -1,7 +1,7 @@
 <?php
 
 
-
+//hice cambios en mi base para pueda cargar manualm las id...q eran autoincrement en la base original
     //EN MI BASE PRIMERO HAY QUE CREAR EMPERSA Y RESPONSABLE PARA CRAR LOS VIAJES Y VIAJES PARA CREAR PASAJEROS
     include "BaseDatos.php";
     include "Viaje.php";
