@@ -122,10 +122,10 @@
                     Tipo de asiento: {$this->getTipoAsiento()}
                     Trayectoria: {$this->getIdayvuelta()}
                     Importe del viaje: {$this->getImporte()}
-                    ID Empresa: {$strEmpresa}
-                    n° empleado: {$strRespons}
-                    PASAJEROS:
-                    {$pasajeros}
+                    ID Empresa: 
+                    {$strEmpresa}
+                    n° empleado: 
+                    {$strRespons}
                     ******************************                    
                     ";
                     
