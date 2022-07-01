@@ -195,7 +195,7 @@
                         $viaje->setImporte($importe);
                         $viaje->setTipoAsiento($tipoAsiento);
 						$viaje->setIdayvuelta($trayecto);
-                        $viaje->setIdEmpresa($idEmpr);
+                        //$viaje->setIdEmpresa($idEmpr);
                         $viaje->setObjResponsable($idResp);
 						$modificacion = $viaje->modificar();
 						if ($modificacion) {

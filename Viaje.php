@@ -4,7 +4,7 @@
         private $codigoViaje; 
         private $destino;
         private $capacidadPasajeros; 
-        private $objEmpresa         //idEmpresa
+        private $objEmpresa;         //idEmpresa
         private $objResponsable;    //idresponsable
         private $importe;
         private $tipoAsiento;
@@ -80,20 +80,20 @@
             $this->codigoViaje = 0;
             $this->destino = "";
             $this->capacidadPasajeros = "";
-            $this->objEmpresa = null;
-            $this->objResponsable = null;
+            $this->objEmpresa = '';
+            $this->objResponsable = '';
             $this->importe = "";
             $this->tipoAsiento = "";
             $this->idayvuelta = "";
             $this->objArrayPasajeros = [];
         }
 
-        public function cargar($codigoViaje, $destino, $capacidadPasajeros, $importe, $tipoAsiento, $idayvuelta) {
+        public function cargar($codigoViaje, $destino, $capacidadPasajeros,$idEmpresa,$objResponsable, $importe, $tipoAsiento, $idayvuelta) {
             $this->setCodigoViaje($codigoViaje);
             $this->setDestino($destino);
             $this->setCapacidadPasajeros($capacidadPasajeros);
-            //$this->setObjEmpresa($idEmpresa);
-            //$this->setObjResponsable($objResponsable);
+            $this->setObjEmpresa($idEmpresa);
+            $this->setObjResponsable($objResponsable);
             $this->setImporte($importe);
             $this->setTipoAsiento($tipoAsiento);
             $this->setIdayvuelta($idayvuelta);
@@ -124,6 +124,8 @@
                     Importe del viaje: {$this->getImporte()}
                     ID Empresa: {$strEmpresa}
                     n° empleado: {$strRespons}
+                    PASAJEROS:
+                    {$pasajeros}
                     ******************************                    
                     ";
                     
@@ -197,6 +199,8 @@
                                         '".$this->getImporte()."',
                                         '".$this->getTipoAsiento()."',
                                         '".$this->getIdayvuelta()."')";
+                                        //'".$this->getObjEmpresa()->getIdEmpresa()."',
+                                        //'".$this->getObjResponsable()->getNroEmpleado()."',
             if ($base->Iniciar()) {
                 if ($base->Ejecutar($consultaInsertar)) {
                     echo $this->setCodigoViaje($base->DevolverID()); //(!)
@@ -216,12 +220,14 @@
             $baseDatos = new BaseDatos();
             $consultaModifica = "UPDATE viaje SET vdestino = '".$this->getDestino()."',
                                                 vcantmaxpasajeros = '".$this->getCapacidadPasajeros()."',
-                                                idempresa = '".$this->getIdEmpresa()."',
+                                                idempresa = '".$this->getObjEmpresa()."',
                                                 rnumeroempleado = '".$this->getObjResponsable()."',
                                                 vimporte = '".$this->getImporte()."',
                                                 tipoAsiento = '".$this->getTipoAsiento()."',
                                                 idayvuelta = '".$this->getIdayvuelta()."'
                                                 WHERE idviaje = ". $this->getCodigoViaje();
+                                                //idempresa = '".$this->getObjEmpresa()->getIdEmpresa()."',
+                                                //rnumeroempleado = '".$this->getObjResponsable()->getNroEmpleado()."',
             if ($baseDatos->Iniciar()) {
                 if ($baseDatos->Ejecutar($consultaModifica)) {
                     $resp = true;
@@ -292,7 +298,7 @@
                 $stResponsable .= $responsable;
             }
             //EMPRESA:
-            if ($empresa->Buscar($this->getIdEmpresa())){
+            if ($empresa->Buscar($this->getObjEmpresa())){
                 $stEmpresa .= $empresa;
             }
             //PASAJEROS
