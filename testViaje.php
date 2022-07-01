@@ -19,23 +19,23 @@
 	
 	
 	function menu(){
-            $menu= "Ingrese una opción:\n\n
-                1) Agregar una empresa \n
-                2) Cargar un viaje \n
-                3) Cargar un pasajero \n
-                4) Cargar un responsable \n
-                5) Modificar una empresa existente \n
-                6) Modificar un viaje \n
-                7) Modificar un pasajero \n
-                8) Modificar un responsable \n
-                9) Eliminar una empresa \n
-               10) Eliminar un viaje \n
-               11) Eliminar un pasajero \n
-               12) Eliminar un responsable \n
-               13) Listar empresas \n
-               14) Listar los viajes \n
-               15) Listar los pasajeros \n
-               16) Listar los responsables \n
+            $menu= "Ingrese una opción:\n\
+                1) Agregar una empresa 
+                2) Cargar un viaje 
+                3) Cargar un pasajero 
+                4) Cargar un responsable 
+                5) Modificar una empresa existente 
+                6) Modificar un viaje 
+                7) Modificar un pasajero 
+                8) Modificar un responsable 
+                9) Eliminar una empresa 
+               10) Eliminar un viaje 
+               11) Eliminar un pasajero 
+               12) Eliminar un responsable 
+               13) Listar empresas 
+               14) Listar los viajes 
+               15) Listar los pasajeros 
+               16) Listar los responsables 
                17) Salir\n";                        
             return $menu;
         }
