@@ -519,18 +519,62 @@
                         echo mostrar($viaje->listar());
                         echo "Su elección: \n ";
                         $number = trim (fgets(STDIN));
-                        $people->cargar($dni,$nombre,$apellido,$telefono,$number);         
-                        $respuesta = $people->insertar();
-                        if($respuesta){
-                            echo "El pasajero ha sido insertado en la base de datos \n ";
-                        }else{
-                            echo "El pasajero NO ha sido insertado en la base de datos \n ";
+                        /*
+                        //para verificar si este pasasjero esta en el viaje ya
+                        $esta = abordo($dni,$number);
+                        if($esta){
+                            $people->cargar($dni,$nombre,$apellido,$telefono,$number);       
+                            $respuesta = $people->insertar();
+                            if($respuesta){
+                                echo "El pasajero ha sido insertado en la base de datos \n ";
+                            }else{
+                                echo "El pasajero NO ha sido insertado en la base de datos \n ";
+                            }
                         }
+                        */
+                        $people->cargar($dni,$nombre,$apellido,$telefono,$number);       
+                            $respuesta = $people->insertar();
+                            if($respuesta){
+                                echo "El pasajero ha sido insertado en la base de datos \n ";
+                            }else{
+                                echo "El pasajero NO ha sido insertado en la base de datos \n ";
+                            }
                     }
+                
         }
 
 
 
+/*
+        //FUNCION PARA BUSCAR SI EL PASAJERO YA ESTA EN EL VIAJE. si devuelve false es que esta
+        //si devuelve true es que no
+
+        function abordo($dni,$idViaje){
+            $viagen = new Viaje();
+            $arrayPasajero = $viagen->getObjArrayPasajeros();
+            $i=0;
+            $esta = true;
+            $count = count($arrayPasajero);
+            while($i<$count && $esta){
+                $pasajer = $arrayPasajero[$i];
+                $codigo = $pasajer->getIdviaje();
+                $id = $pasajer->getDni();             //NO SE USO LA FUNCION PORQUE EN EL MOMENTO
+                if($id == $dni){                      //DE CREAR EL VIAJE NO SE PIDEN LOS PASAJEROS
+                    if($codigo == $idViaje){          //CUANDO SE CREAN LOS PASJEROS SE DA ELECCION AL VIAJE
+                        $esta = false;                //PERO EL CODIGO PARA PEDIR SI TIENE ESE VIAJE CON ESE PASAJERO 
+                    }else{                            //SERIA ESTA Y LA IMPLEMENTARIA AL CREAR EL VIAJE SI CREARA AL MISMO 
+                        $esta =true;                  //CON PASAJEROS, LO CUAL NO ES LO QUE DECIDI IMPLEMENTAR
+                    }                                 //EN LA VIDA REAL SE CREA EL VIAJE Y SE VA COMPLETANDO
+                }else{
+                    $esta =true;
+                }
+                $i++;
+
+
+            }
+            return $esta;
+        }
+*/
 
         //FUNCION PARA CREAR UN RESPONSABLE
         function infoResponsable(){
