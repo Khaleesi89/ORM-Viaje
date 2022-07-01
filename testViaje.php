@@ -56,7 +56,7 @@
                     $salida = false; 
                     do{
                         crearEmpresa();
-                        echo "Desea seguir cargando empresas? SI o NO \n";  //LISTO
+                        echo "\n Desea seguir cargando empresas? SI o NO \n";  //LISTO
                         $resp = strtoupper(trim(fgets(STDIN)));
                         if($resp == "SI"){
                             $salida = true;   
@@ -67,11 +67,11 @@
                 
                 break;
                 case 2:
-                    //2)Cargar un viaje
+                    //2)Cargar un viaje                   //VERIFICARA QUE EL DESTINO ESTA REPETIDO UNA VEZ QUE TERMINE LA EJECUCION Y LO ELIMINA
                     $salida = false; 
                     do{
                         $viaje = crearViaje();
-                        echo "Desea seguir cargando viajes? SI o NO \n ";
+                        echo "\n Desea seguir cargando viajes? SI o NO \n ";
                         $resp = strtoupper(trim(fgets(STDIN)));                 //LISTO
                         if($resp == "SI"){
                             $salida = true;   
@@ -87,7 +87,7 @@
                             do{
 
                                 $pasajero = infoPasajero();
-                                echo "Desea seguir cargando pasajeros? SI o NO \n";
+                                echo " \n Desea seguir cargando pasajeros? SI o NO \n";
                                 $resp = strtoupper(trim(fgets(STDIN)));               //FUNCIONA
                                 if($resp == "SI"){
                                     $salida = true;   
@@ -104,7 +104,7 @@
                     do{                                                             //FUNCIONA
                         echo "Ingrese los datos del responsable \n";
                         $responsable = infoResponsable();
-                        echo "Desea seguir cargando un responsable? SI o NO \n ";          
+                        echo " \n Desea seguir cargando un responsable? SI o NO \n ";          
                         $resp = strtoupper(trim(fgets(STDIN)));
                         if($resp == "SI"){
                             $salida = true;   

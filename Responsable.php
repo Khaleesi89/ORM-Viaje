@@ -1,5 +1,5 @@
 <?php
-    //número de empleado, número de licencia, nombre y apellido
+    
     class Responsable {
         private $nombre;
         private $apellido;
@@ -7,7 +7,7 @@
         private $nroLicencia;
         private $mensajeoperacion;
         
-        //Métodos de acceso:
+        
         public function getNombre() {
             return $this->nombre;
         }
