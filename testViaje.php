@@ -313,19 +313,29 @@
                 break;
                 case 10:
                         //10) Eliminar un viaje
-                        echo "Ingrese el DNI del pasajero que desea eliminar: ";      //FUNCIONA
+                        echo "Ingrese el ID del viaje que desea eliminar: ";      //FUNCIONA
                         $dni = trim(fgets(STDIN));
-                        $objPasajero = new Pasajero();
-                        $resp = $objPasajero->buscar($dni);
+                        $viaje = new Viaje();
+                        $resp = $viaje->buscar($dni);
                         if($resp){
-                             $resp = $objPasajero->eliminar($dni);
-                             if($resp){
-                                 echo "El pasajero se elimino correctamente!\n";
+                            $hayPasajero = $viaje->listarPasajeros();
+                            if($hayPasajero == null){
+                                $resp = $viaje->eliminar($dni);
+                                if($resp){
+                                    echo "El viaje se elimino correctamente!\n";
+                                }
+                            
                             }else{
-                                 echo "No se pudo elimiar el pasajero \n";
+                                if($viaje->getObjArrayPasajeros() != []){                    #
+                                    foreach($viaje->getObjArrayPasajeros() as $p){           #
+                                        $p->Eliminar();                                       #
+                                    }                                                         #
+                                }                                                             #
+                                $viaje->Eliminar(); 
+                                echo "El viaje se elimino correctamente!\n";                                
                             }
                         }else{
-                             echo "El DNI del pasajero ingresado no existe! \n";
+                             echo "El id del viaje ingresado no existe! \n";
                         }
 
                 break;
