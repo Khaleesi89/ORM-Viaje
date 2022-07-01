@@ -50,7 +50,7 @@
             ID EMPRESA: {$this->getIdEmpresa()}
             NOMBRE EMPRESA: {$this->getEnombre()}
             DIRECCIÓN EMPRESA: {$this->getEdireccion()}
-            ******************************************
+            ***************************
             ";
             return $info;
         }

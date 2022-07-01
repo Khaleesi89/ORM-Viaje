@@ -61,7 +61,7 @@
                     Apellido: {$this->getApellido()}
                     N° de empleado: {$this->getNroEmpleado()}
                     N° de licencia: {$this->getNroLicencia()}
-                    *********************************
+                    *********************
                     ";
             return $info;
         }

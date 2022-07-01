@@ -124,7 +124,7 @@
                     Importe del viaje: {$this->getImporte()}
                     ID Empresa: {$this->getIdEmpresa()}
                     n° empleado: {$this->getObjResponsable()}
-                    ************************************************                    
+                    ******************************                    
                     ";
                     //ID Empresa: ".$this->getIdEmpresa()
             return $info;

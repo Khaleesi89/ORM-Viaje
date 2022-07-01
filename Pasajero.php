@@ -72,7 +72,7 @@
                     DNI: {$this->getDni()}
                     Teléfono: {$this->getTelefono()}
                     ID Viaje: {$this->getIdviaje()} 
-                    ***********************************
+                    ***********************
                     ";
             return $cadena;
         }
