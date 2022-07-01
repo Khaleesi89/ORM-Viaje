@@ -613,11 +613,7 @@
                 }
         }
 
-        //FUNCION PARA CAMBIAR DE VIAJE AL PASAJERO
-
-        function cambioViaje($viaje, $pasajero){
-            
-        }
+        
 
         //FUNCION PARA MOSTRAR ARRAYS
         function mostrar($colex){

@@ -90,11 +90,8 @@
                 if ($base->Ejecutar($consultaEmpresa)) {				
                     $arrayEmpresas = array();
                     while ($empresa = $base->Registro()) {
-                        $idEmpresa = $empresa['idempresa'];
-                        $nombre = $empresa['enombre'];
-                        $direccion = $empresa['edireccion'];
                         $nuevaEmpresa = new Empresa();
-                        $nuevaEmpresa->cargar($idEmpresa, $nombre, $direccion);
+                        $nuevaEmpresa->buscar($empresa['idempresa']);
                         array_push($arrayEmpresas, $nuevaEmpresa);
                     }
                  } else {

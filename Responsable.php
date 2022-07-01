@@ -104,12 +104,8 @@
                 if ($base->Ejecutar($consulta)) {				
                     $arregloResponsable = array();
                     while ($row2 = $base->Registro()) {
-                        $nroEmpleado = $row2['rnumeroempleado'];
-                        $nroLicencia = $row2['rnumerolicencia'];
-                        $nombre = $row2['rnombre'];
-                        $apellido = $row2['rapellido'];
                         $nuevoResponsable = new Responsable();
-                        $nuevoResponsable->cargar($nroEmpleado, $nroLicencia, $nombre, $apellido);
+                        $nuevoResponsable->buscar($row2['rnumeroempleado']);
                         array_push($arregloResponsable, $nuevoResponsable);
                     }
                  } else {
