@@ -66,12 +66,14 @@
 
         public function __toString() {
             
-            $cadena = "-- -- -- DATOS DEL PASAJERO -- -- --\n".
-                    "+ Nombre: ".$this->getNombre()."\n".
-                    "+ Apellido: ".$this->getApellido()."\n".
-                    "+ DNI: ".$this->getDni()."\n".
-                    "+ Teléfono: ".$this->getTelefono()."\n".
-                    "+ ID Viaje: ".$this->getIdviaje()."\n"; 
+            $cadena = "********* PASAJERO *************
+                    Nombre: {$this->getNombre()}
+                    Apellido: {$this->getApellido()}
+                    DNI: {$this->getDni()}
+                    Teléfono: {$this->getTelefono()}
+                    ID Viaje: {$this->getIdviaje()} 
+                    ***********************************
+                    ";
             return $cadena;
         }
 

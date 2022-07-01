@@ -46,10 +46,11 @@
         }
 
         public function __toString() {
-            $info = "
+            $info = "***********EMPRESA **************
             ID EMPRESA: {$this->getIdEmpresa()}
             NOMBRE EMPRESA: {$this->getEnombre()}
             DIRECCIÓN EMPRESA: {$this->getEdireccion()}
+            ******************************************
             ";
             return $info;
         }

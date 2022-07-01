@@ -56,11 +56,12 @@
         }
 
         public function __toString() {
-            $info = "RESPONSABLE 
+            $info = "********RESPONSABLE*************
                     Nombre: {$this->getNombre()}
                     Apellido: {$this->getApellido()}
                     N° de empleado: {$this->getNroEmpleado()}
                     N° de licencia: {$this->getNroLicencia()}
+                    *********************************
                     ";
             return $info;
         }
