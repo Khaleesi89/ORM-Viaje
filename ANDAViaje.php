@@ -1,5 +1,8 @@
 <?php
 
+
+
+///el que hice primero
     class Viaje {
         private $codigoViaje; 
         private $destino;
