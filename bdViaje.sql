@@ -22,7 +22,6 @@ CREATE TABLE viaje (
         idviaje bigint ,
         vdestino varchar(150),
         vcantmaxpasajeros int,
-        rdocumento varchar(15),
         idempresa bigint,
         rnumeroempleado bigint,
         vimporte float,

@@ -466,6 +466,7 @@
                     $idEmpl = trim (fgets(STDIN));
                     $viaje->cargar($codigo,$lugarDestino,$maxAsientos,$idEmpresa,$idEmpl,$importe,$asiento,$idavuelta);
                     $validacion = viajeduplicado($viaje);
+
                     if($validacion){
                         $viaje->eliminar();
                         echo "Su viaje està duplicado \n";
@@ -475,6 +476,7 @@
                             echo "Su viaje ha ingresado en la base de datos \n";
                         }else{
                             echo "Su viaje no ha ingresado en la base de datos \n";
+                            echo $viaje->getMensajeError();
                         }
                     }           
                 }  
@@ -494,8 +496,8 @@
             $mismoViaje = false;
             $cantidad = count($arrayViajes);
             while(!$mismoViaje && $i < $cantidad){
-                $viajecito = $arrayViajes[$i]->getDestino();
-                $viajeInspect = $objViajeIngresado->getDestino();
+                $viajecito = $arrayViajes[$i]->getVDestino();
+                $viajeInspect = $objViajeIngresado->getVDestino();
                 if($viajecito == $viajeInspect){
                     $mismoViaje = true;
                 }else{
