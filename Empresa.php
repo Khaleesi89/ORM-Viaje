@@ -46,13 +46,14 @@
         }
 
         public function __toString() {
-                            $info = "***********EMPRESA **************
-                            ID EMPRESA: {$this->getIdEmpresa()}
-                            NOMBRE EMPRESA: {$this->getEnombre()}
-                            DIRECCIÓN EMPRESA: {$this->getEdireccion()}
-                            ***************************
-                            ";
-                            return $info;
+                $info = "
+                ***********EMPRESA **************
+                ID EMPRESA: {$this->getIdEmpresa()}
+                NOMBRE EMPRESA: {$this->getEnombre()}
+                DIRECCIÓN EMPRESA: {$this->getEdireccion()}
+                *********************************
+                ";
+                return $info;
         }
 
         public function buscar($idEmpresa) {

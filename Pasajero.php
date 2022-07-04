@@ -5,7 +5,7 @@
         private $nombre;
         private $apellido;
         private $telefono;
-        private $idviaje; //
+        private $objviaje; //es objeto viaje
         private $mensajeoperacion;
 
         //Métodos de acceso:
@@ -21,8 +21,8 @@
         public function getTelefono() {
             return $this->telefono;
         }
-        public function getIdviaje() {
-            return $this->idviaje;
+        public function getObjviaje() {
+            return $this->objviaje;
         }
         public function getmensajeoperacion() {
             return $this->mensajeoperacion;
@@ -40,8 +40,8 @@
         public function setTelefono($telefono) {
             $this->telefono = $telefono;
         }
-        public function setIdviaje($idViajes) {
-            $this->idviaje = $idViajes;
+        public function setObjviaje($idViajes) {
+            $this->objviaje = $idViajes;
         }
         public function setmensajeoperacion($mensajeoperacion){
             $this->mensajeoperacion = $mensajeoperacion;
@@ -61,19 +61,22 @@
             $this->setNombre($nombre);
             $this->setApellido($apellido);
             $this->setTelefono($telefono);
-            $this->setIdviaje($idViaje);
+            $viaje = new Viaje();
+            $viaje->buscar($idViaje);
+            $this->setObjviaje($viaje);
         }
 
         public function __toString() {
             
-            $cadena = "********* PASAJERO *************
-                    Nombre: {$this->getNombre()}
-                    Apellido: {$this->getApellido()}
-                    DNI: {$this->getDni()}
-                    Teléfono: {$this->getTelefono()}
-                    ID Viaje: {$this->getIdviaje()} 
-                    ***********************
-                    ";
+            $cadena = "
+            ********* PASAJERO *************
+            Nombre: {$this->getNombre()}
+            Apellido: {$this->getApellido()}
+            DNI: {$this->getDni()}
+            Teléfono: {$this->getTelefono()}
+            ID Viaje: {$this->getObjviaje()} 
+            ********************************
+            ";
             return $cadena;
         }
 
@@ -87,13 +90,13 @@
                     if ($row2 = $baseDatos->registro()) {
                         //Se busca el objViaje por el código de viaje:
                         $objViaje = new Viaje();
-                        $objViaje->Buscar($this->getIdviaje());
+                        $objViaje->Buscar($this->getObjviaje());
 
                         $this->setDni($nroDocumento);
                         $this->setNombre($row2['pnombre']);
                         $this->setApellido($row2['papellido']);
                         $this->setTelefono($row2['ptelefono']);
-                        $this->setIdViaje($row2['idviaje']); 
+                        $this->setObjviaje($row2['idviaje']); 
                         //$this->getIdviaje($objViaje->getCodigoViaje());
                         $resp = true;
                     }
@@ -139,12 +142,14 @@
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
+            $pasaj = new Pasajero();
+            $idViaje = $pasaj->getObjviaje();
             $consultaInsertar = "INSERT INTO pasajero(rdocumento, pnombre, papellido, ptelefono, idviaje) 
                                 VALUES ('".$this->getDni()."',
                                         '".$this->getNombre()."',
                                         '".$this->getApellido()."',
                                         '".$this->getTelefono()."',
-                                        '".$this->getIdviaje()."')"; 
+                                        '".$idViaje."')"; 
             if ($base->Iniciar()) {
                 if ($base->Ejecutar($consultaInsertar)) {
                     $resp = true;
@@ -164,7 +169,7 @@
             $consultaModifica = "UPDATE pasajero SET pnombre = '".$this->getNombre()."',
                                                 papellido = '".$this->getApellido()."',
                                                 ptelefono = '".$this->getTelefono()."',
-                                                idviaje = '".$this->getIdviaje()."'
+                                                idviaje = '".$this->getObjviaje()."'
                                                 WHERE rdocumento = ". $this->getDni();
             if ($baseDatos->Iniciar()) {
                 if ($baseDatos->Ejecutar($consultaModifica)) {

@@ -405,7 +405,6 @@ class Viaje{
     
     
     public function __toString() {
-        $pasajeros = $this->listarPasajeros();
         $strRespons = "";
         $strEmpresa = "";
         $responsable = new Responsable();
@@ -422,20 +421,20 @@ class Viaje{
         if($empresa->Buscar($this->getObjEmpresa())){
             $strEmpresa .= $empresa;
         }
-        $cant = count($pasajeros);
-        $info = "*********DATOS DEL VIAJE**********************
-                Código del viaje: {$this->getIdViaje()}
-                Destino: {$this->getVDestino()}
-                Capacidad de pasajeros: {$this->getVCantidadMax()}
-                Cantidad de pasajeros: {$cant}
-                Tipo de asiento: {$this->getTipoAsiento()}
-                Trayectoria: {$this->getIdaVuelta()}
-                Importe del viaje: {$this->getVImporte()}
-                ID Empresa: 
-                {$empresa}
-                n° empleado: 
-                {$responsable}
-                ******************************                    
+        
+        $info = "
+        *********DATOS DEL VIAJE**********************
+        Código del viaje: {$this->getIdViaje()}
+        Destino: {$this->getVDestino()}
+        Capacidad de pasajeros: {$this->getVCantidadMax()}
+        Tipo de asiento: {$this->getTipoAsiento()}
+        Trayectoria: {$this->getIdaVuelta()}
+        Importe del viaje: {$this->getVImporte()}
+        ID Empresa: 
+        {$empresa}
+        n° empleado: 
+        {$responsable}
+        ***********************************************                    
                 ";
                 
         return $info;

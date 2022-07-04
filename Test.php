@@ -250,7 +250,7 @@
 						$pasaj->setNombre($name);
                         $pasaj->setApellido($apell);
                         $pasaj->setTelefono($telef);
-                        $pasaj->setIdviaje($idViaj);
+                        $pasaj->setObjviaje($idViaj);
 						$modificacion = $pasaj->modificar();
 						if ($modificacion) {
 							echo "Pasajero modificado con éxito.\n";
@@ -552,7 +552,7 @@
                             }
                         }
                         */
-                        $people->cargar($dni,$nombre,$apellido,$telefono,$number);       
+                        $people->cargar($dni,$nombre,$apellido,$telefono,$viaje);       
                             $respuesta = $people->insertar();
                             if($respuesta){
                                 echo "El pasajero ha sido insertado en la base de datos \n ";
