@@ -227,15 +227,26 @@ class Viaje{
     public function modificar(){
         $baseDatos = new BaseDatos();
         $resp = false;
+        $empresa =$this->getObjEmpresa();
+        $idEmpres = $empresa->getIdEmpresa();
+        $responsable= $this->getObjResponsable();
+        $idResp = $responsable->getNroEmpleado();
+
+        /*$consulta = "UPDATE viaje SET vdestino = {$this->getVdestino()}, vcantmaxpasajeros = {$this->getVCantidadMax()}, idempresa = {$idEmpres}, rnumeroempleado = {$idResp}, vimporte = {$this->getVimporte()}, tipoAsiento = '{$this->getTipoAsiento()}', idayvuelta = '{$this->getIdaVuelta()}' WHERE idviaje = {$this->getIdviaje()}";*/
+        
+        $consulta = "UPDATE viaje SET idViaje = ".$this->getIdViaje().",vdestino = '".$this->getVDestino()."',  vcantmaxpasajeros = ".$this->getVCantidadMax().",idempresa = ".$idEmpres.", rnumeroempleado = ".$idResp.",vimporte = ".$this->getVImporte().",tipoAsiento = ".$this->getTipoAsiento().",idayvuelta = '".$this->getIdaVuelta()."' WHERE idviaje = ".$this->getIdViaje();
+
+/*
         $consulta = "UPDATE viaje 
                     SET idViaje = ".$this->getIdViaje().",
                     vdestino = '".$this->getVDestino()."', 
                     vcantmaxpasajeros = ".$this->getVCantidadMax().", 
-                    idempresa = ".$this->getObjEmpresa()->getIdentificacion().", 
-                    rnumeroempleado = ".$this->getObjResponsable()->getNumEmpleado().", 
                     vimporte = ".$this->getVImporte().",
-                    tipoAsiento = ".$this->getTipoAsiento().",
-                    idayvuelta = '".$this->getIdaVuelta()."' WHERE idviaje = ".$this->getIdViaje();
+                    tipoAsiento = '".$this->getTipoAsiento()."',
+                    idayvuelta = '".$this->getIdaVuelta()."',
+                    idempresa = ".$idEmpres.", 
+                    rnumeroempleado = ".$idResp." WHERE idviaje =".$this->getIdViaje();*/
+                    
         if($baseDatos->iniciar()){
             if($baseDatos->ejecutar($consulta)){
                 $resp = true;
@@ -274,15 +285,17 @@ class Viaje{
 		if($baseDatos->iniciar()){
 			if($baseDatos->ejecutar($consulta)){
 				if($viaje=$baseDatos->registro()){
-                    $objReponsable = new Responsable();
-                    $objEmpresa = new Empresa();
-                    $objReponsable->buscar($viaje['rnumeroempleado']);					
-                    $objEmpresa->buscar($viaje['idempresa']);	
-				    $this->setIdViaje($idViaje);
+                    //$objReponsable = new Responsable();
+                    //$objEmpresa = new Empresa();
+                    //se comento porque ya no es necesario obtener el id de empresa y responsable
+                    //$objReponsable->buscar($viaje['rnumeroempleado']);					
+                    //$objEmpresa->buscar($viaje['idempresa']);	
+                    $this->setIdViaje($viaje['idempresa']);
+                    //$this->setIdViaje($idViaje);
 					$this->setVDestino($viaje['vdestino']);
 					$this->setVCantidadMax($viaje['vcantmaxpasajeros']);
-					$this->setObjEmpresa($objEmpresa);
-					$this->setObjResponsable($objReponsable);
+					$this->setObjEmpresa($viaje['idempresa']);
+					$this->setObjResponsable($viaje['rnumeroempleado']);
 					$this->setVImporte($viaje['vimporte']);
 					$this->setTipoAsiento($viaje['tipoAsiento']);
 					$this->setIdaVuelta($viaje['idayvuelta']);
@@ -298,10 +311,10 @@ class Viaje{
 		 return $resp;
 	}	
 
-    public function listar($condicion){
+    public function listar($condicion = ""){
 	    $resp = [];
         $baseDatos = new BaseDatos();
-		$consultaViaje="SELECT * FROM viaje ";
+		$consultaViaje = "SELECT * FROM viaje ";
 		if($condicion != ""){
 		    $consultaViaje .=' where '.$condicion;
 		}
@@ -313,17 +326,17 @@ class Viaje{
 					array_push($resp, $objViaje);
 				}
 		 	}else {
-                $this->setMensajeError($baseDatos->getERROR());
+                $resp = $this->setMensajeError($baseDatos->getERROR());
 			}
 		 }else{
-            $this->setMensajeError($baseDatos->getERROR());
+            $resp = $this->setMensajeError($baseDatos->getERROR());
 		 }	
 		 return $resp;
 	}	
 
-    /**
-     * Este modulo busca en la BD los pasajeros que coniciden con el viaje
-    */
+    /*
+     // Este modulo busca en la BD los pasajeros que coniciden con el viaje
+    
     public function obtenerPasajeros(){
         $baseDatos = new BaseDatos();
         $resp = false;
@@ -343,9 +356,11 @@ class Viaje{
         return $resp;
     }
 
-    /**
-     * Este modulo busca en la BD los pasajeros que coniciden con el viaje
-    */
+   
+
+   
+     // Este modulo busca en la BD los pasajeros que coniciden con el viaje
+    
     public function hayPasajesDisponible(){
         $this->obtenerPasajeros();
         $arrayObjPasajero = $this->getArrayObjPasajero();
@@ -356,6 +371,38 @@ class Viaje{
         }
         return $verificacion;
     }
+
+    */
+
+
+    public function listarPasajeros() {
+        $arregloPasajeros = null;
+        $base = new BaseDatos();
+        $consulta = "SELECT * FROM pasajero WHERE idviaje = ".$this->getIdViaje();
+        $consulta .= " ORDER BY papellido";
+        if ($base->Iniciar()) {
+            if ($base->Ejecutar($consulta)) {
+                $arregloPasajeros = array();
+                while ($row2=$base->Registro()) {
+                    $dni = $row2['rdocumento'];
+                    $nombre = $row2['pnombre'];
+                    $apellido = $row2['papellido'];
+                    $telefono = $row2['ptelefono'];
+                    $idViaje = $row2['idviaje'];
+
+                    $pasajero = new Pasajero();
+                    $pasajero->cargar($dni, $nombre, $apellido, $telefono, $idViaje);
+                    array_push($arregloPasajeros, $pasajero);
+                }
+            } else {
+                $this->setMensajeError($base->getERROR());
+            }
+        } else {
+            $this->setMensajeError($base->getERROR());
+        }
+        return $arregloPasajeros;
+    }
+    
     
     public function __toString() {
         $pasajeros = $this->listarPasajeros();
@@ -363,7 +410,11 @@ class Viaje{
         $strEmpresa = "";
         $responsable = new Responsable();
         $empresa = new Empresa();
-        //responsable 
+       /* $codigoempresa = $this->getObjEmpresa();
+        $codigoempleado = $this->getObjResponsable();
+        $empresa = $empresa->listar($codigoempresa);
+        $responsable = $responsable->listar($codigoempleado);*/
+       //responsable 
         if ($responsable->Buscar($this->getObjResponsable())) {
             $strRespons .= $responsable;
         }
@@ -373,17 +424,17 @@ class Viaje{
         }
         $cant = count($pasajeros);
         $info = "*********DATOS DEL VIAJE**********************
-                Código del viaje: {$this->getCodigoViaje()}
-                Destino: {$this->getDestino()}
-                Capacidad de pasajeros: {$this->getCapacidadPasajeros()}
+                Código del viaje: {$this->getIdViaje()}
+                Destino: {$this->getVDestino()}
+                Capacidad de pasajeros: {$this->getVCantidadMax()}
                 Cantidad de pasajeros: {$cant}
                 Tipo de asiento: {$this->getTipoAsiento()}
-                Trayectoria: {$this->getIdayvuelta()}
-                Importe del viaje: {$this->getImporte()}
+                Trayectoria: {$this->getIdaVuelta()}
+                Importe del viaje: {$this->getVImporte()}
                 ID Empresa: 
-                {$strEmpresa}
+                {$empresa}
                 n° empleado: 
-                {$strRespons}
+                {$responsable}
                 ******************************                    
                 ";
                 

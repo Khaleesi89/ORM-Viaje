@@ -166,7 +166,10 @@
 						do {
 							echo "Seleccione un viaje (por el ID): \n";
 							$nroViaje = trim(fgets(STDIN));
+                            $empresa = new Empresa();
 							$encontrada = $empresa->buscar($nroViaje);
+                            //echo $encontrada;
+                            //die();
 							if ($encontrada == false) {
 								echo " El número de viaje seleccionado es incorrecto.\n";
 							}
@@ -183,25 +186,30 @@
                         echo " Ingrese el nuevo tipo de trayecto ida(I) / ida y vuelta( IYV)\n";
 						$trayecto = strtoupper(trim(fgets(STDIN)));
                         echo "Elija la nueva empresa responsable del viaje \n";
-                        $empresita = new Empresa();
-                        echo mostrar($empresita->listar());
+                        //$empresita = new Empresa();
+                        echo mostrar($empresa->listar());
                         $idEmpr = trim(fgets(STDIN));
+                        echo "Elija al nuevo responsable del viaje \n";
                         $responsab = new Responsable();
                         echo mostrar($responsab->listar());
                         $idResp = trim(fgets(STDIN));
 						//Se setean los nuevos datos del viaje
-						$viaje->setDestino($destino);
-                        $viaje->setCapacidadPasajeros($maxPasajeros);
-                        $viaje->setImporte($importe);
+
+                        //$viaje->getIdViaje($nroViaje);
+						$viaje->setVDestino($destino);
+                        $viaje->setVCantidadMax($maxPasajeros);
+                        $viaje->setVImporte($importe);
                         $viaje->setTipoAsiento($tipoAsiento);
-						$viaje->setIdayvuelta($trayecto);
-                        $viaje->setObjEmpresa($idEmpr);
-                        $viaje->setObjResponsable($idResp);
+						$viaje->setIdaVuelta($trayecto);
+                        $viaje->setObjEmpresa($empresa);
+                        $viaje->setObjResponsable($responsab);
 						$modificacion = $viaje->modificar();
 						if ($modificacion) {
 							echo "Viaje modificado con éxito.\n";
 						} else {
 							echo "No se pudo modificar. Verificar";
+                            echo $viaje->getMensajeError();
+                            
 						}
                     }
 
