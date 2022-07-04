@@ -159,9 +159,9 @@
                     $viaje = new Viaje();
                     $cantViajes = count($viaje->listar());
 					if ($cantViajes == 0) {
-						echo "\n Aún no se han agregado viajes.\n";               //FUNCIONA
+						echo "\n Aún no se han agregado viajes.\n";               //NO FUNCIONA 064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'vdestino = 'TROMEN',  vcantmaxpasajeros = 23,idempresa = 1, rnumeroempleado =...' at line 1
 					} else {
-						//Se listan en pantalla todas los viajes almacenados
+						//Se listan en pantalla todas los viajes almacenados            //ME MUESTRA LOS CODIGOS DE VIAJE ERRONEOS
 						echo mostrar($viaje->listar());
 						do {
 							echo "Seleccione un viaje (por el ID): \n";
@@ -334,11 +334,12 @@
                                 }
                             
                             }else{
-                                if($viaje->getObjArrayPasajeros() != []){                    #
-                                    foreach($viaje->getObjArrayPasajeros() as $p){           #
-                                        $p->Eliminar();                                       #
-                                    }                                                         #
-                                }                                                             #
+                                if($viaje->getObjArrayPasajeros() != []){     
+                                    echo "Este viaje posee pasajeros- Serán eliminados del viaje";               
+                                    foreach($viaje->getObjArrayPasajeros() as $p){           
+                                        $p->Eliminar();                                       
+                                    }                                                         
+                                }                                                             
                                 $viaje->Eliminar(); 
                                 echo "El viaje se elimino correctamente!\n";                                
                             }
@@ -555,6 +556,8 @@
                         $people->cargar($dni,$nombre,$apellido,$telefono,$viaje);       
                             $respuesta = $people->insertar();
                             if($respuesta){
+                                $array = $viaje->getArrayObjPasajero();
+                                array_push($array,$people);
                                 echo "El pasajero ha sido insertado en la base de datos \n ";
                             }else{
                                 echo "El pasajero NO ha sido insertado en la base de datos \n ";

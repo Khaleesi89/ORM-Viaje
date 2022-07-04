@@ -8,7 +8,10 @@
         private $objviaje; //es objeto viaje
         private $mensajeoperacion;
 
-        //Métodos de acceso:
+        /**************************************/
+        /************     GET    **************/
+        /**************************************/
+
         public function getNombre() {
             return $this->nombre;
         }
@@ -27,6 +30,10 @@
         public function getmensajeoperacion() {
             return $this->mensajeoperacion;
         }
+
+        /**************************************/
+        /************     SET    **************/
+        /**************************************/
 
         public function setNombre($nombre) {
             $this->nombre = $nombre;
@@ -47,7 +54,10 @@
             $this->mensajeoperacion = $mensajeoperacion;
         }
 
-        //Métodos varios:
+        /**************************************/
+        /************  CONSTRUCT **************/
+        /**************************************/
+
         public function __construct() {
             $this->nombre = "";
             $this->apellido = "";
@@ -55,6 +65,10 @@
             $this->telefono = "";
             $this->idviaje = null;
         }
+
+        /**************************************/
+        /************   CARGAR   **************/
+        /**************************************/
 
         public function cargar($dni, $nombre, $apellido, $telefono, $idViaje) {		
             $this->setDni($dni);
@@ -66,6 +80,10 @@
             $this->setObjviaje($viaje);
         }
 
+
+        /**************************************/
+        /************  TOSTRING  **************/
+        /**************************************/
         public function __toString() {
             
             $cadena = "
@@ -79,6 +97,10 @@
             ";
             return $cadena;
         }
+
+        /**************************************/
+        /************   BUSCAR   **************/
+        /**************************************/
 
         public function buscar($nroDocumento) {
             $baseDatos = new BaseDatos();
@@ -109,7 +131,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************   LISTAR   **************/
+        /**************************************/
+
         public function listar($condicion = ""){
             $arrayPasajeros = null;
             $base = new BaseDatos();
@@ -139,6 +164,11 @@
             return $arrayPasajeros;
         }
 
+
+        /**************************************/
+        /************   INSERTAR **************/
+        /**************************************/
+
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
@@ -162,7 +192,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************  MODIFICAR **************/
+        /**************************************/
+
         public function modificar() {
             $resp = false; 
             $baseDatos = new BaseDatos();
@@ -183,11 +216,10 @@
             return $resp;
         }
         
-        /**
-         * Método 5: eliminar - 
-         * Elimina una tupla en la tabla "pasajero".
-         * @return boolean $resp
-         */
+        /**************************************/
+        /************   ELIMINAR **************/
+        /**************************************/
+
         public function eliminar() {
             $baseDatos = new BaseDatos();
             $resp = false;

@@ -7,7 +7,10 @@
         private $nroLicencia;
         private $mensajeoperacion;
         
-        
+        /**************************************/
+        /************     GET    **************/
+        /**************************************/
+
         public function getNombre() {
             return $this->nombre;
         }
@@ -23,6 +26,10 @@
         public function getmensajeoperacion() {
             return $this->mensajeoperacion;
         }
+
+        /**************************************/
+        /************     SET    **************/
+        /**************************************/
 
         public function setNombre($nombre) {
             $this->nombre = $nombre;
@@ -41,6 +48,10 @@
         }
 
         
+        /**************************************/
+        /************   CONSTRUCT  **************/
+        /**************************************/
+
         public function __construct() {
             $this->nroEmpleado = 0;
             $this->nroLicencia = "";
@@ -48,12 +59,20 @@
             $this->apellido = "";
         }
 
+        /**************************************/
+        /************   CARGAR **************/
+        /**************************************/
+
         public function cargar($nroEmpleado, $nroLicencia, $nombre, $apellido) {
             $this->setNroEmpleado($nroEmpleado);
             $this->setNroLicencia($nroLicencia);
             $this->setNombre($nombre);
             $this->setApellido($apellido);
         }
+
+        /**************************************/
+        /************  TO STRING   **************/
+        /**************************************/
 
         public function __toString() {
             $info = "********RESPONSABLE*************
@@ -66,7 +85,10 @@
             return $info;
         }
 
-        
+        /**************************************/
+        /************  BUSCAR    **************/
+        /**************************************/
+
         public function buscar($nroEmpleado) {
             $baseDatos = new BaseDatos();
             $consulta = "SELECT * FROM responsable WHERE rnumeroempleado = ".$nroEmpleado;
@@ -90,7 +112,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************   LISTAR   **************/
+        /**************************************/
+
         public function listar($condicion = ""){
             $arregloResponsable = null;
             $base = new BaseDatos();
@@ -118,7 +143,10 @@
             return $arregloResponsable;
         }
 
-        
+        /**************************************/
+        /************ INSERTAR   **************/
+        /**************************************/
+
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
@@ -139,7 +167,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************ MODIFICAR  **************/
+        /**************************************/
+
         public function modificar() {
             $resp = false; 
             $baseDatos = new BaseDatos();
@@ -159,6 +190,9 @@
             return $resp;
         }
         
+        /**************************************/
+        /************  ELIMINAR  **************/
+        /**************************************/
         
         public function eliminar() {
             $baseDatos = new BaseDatos();
@@ -174,74 +208,6 @@
                 $this->setmensajeoperacion($baseDatos->getError());
             }
             return $resp;
-        }
-
-        //VIAJES Q TIENE A CARGO UN ENCARGADO EN ESPECIFICO
-         
-        public function listarViajesResponsable() {
-            $arrayViajes = null;
-            $base = new BaseDatos();
-            $consulta = "SELECT * FROM viaje WHERE rnumeroempleado = ".$this->getNroEmpleado();    
-            if ($base->Iniciar()) {
-                if ($base->Ejecutar($consulta)) {
-                    $arrayViajes = array();
-                    while ($resp=$base->Registro()) {
-                        $codigoViaje = $resp['idviaje'];
-                        $destino = $resp['vdestino'];
-                        $capacidadPasajeros = $resp['vcantmaxpasajeros'];
-                        $idEmpresa = $resp['idempresa'];
-                        $objResponsable = $resp['rnumeroempleado'];
-                        $importe = $resp['vimporte'];
-                        $tipoAsiento = $resp['tipoAsiento'];
-                        $idayvuelta = $resp['idayvuelta'];
-                        $viaje = new Viaje();
-                        $viaje->cargar($codigoViaje, $destino, $capacidadPasajeros, $idEmpresa, $objResponsable, $importe, $tipoAsiento, $idayvuelta);
-                        $arrayViajes[] = $viaje;
-                    }
-                } else {
-                    $this->setmensajeoperacion($base->getError());
-                }
-            } else {
-                $this->setmensajeoperacion($base->getError());
-            }
-            return $arrayViajes;
-        }
-
-        //FUNCION QUE BORRA TODOS LO SVIAJES ASOCIADOS A UN RESPONSABLE
-
-        function eliminarViajesResponsable()
-        {
-            $resp = false;
-            $listaDeViajes = $this->listarViajesResponsable();
-            foreach ($listaDeViajes as $unViaje) {
-                $listaDePasajeros = $unViaje->listarPasajeros();
-                foreach ($listaDePasajeros as $unPasajero) {
-                    $unPasajero->Eliminar();
-                }
-                $unViaje->Eliminar();
-            }
-            return $resp;
-        }
-
-        //STRIN CON LOS VIAJES A CARGO
-
-        public function mostrarViajesResponsable() {
-            $i = 1;
-            $cadenaViaje = "";
-            $listaDeViajes = $this->listarViajesResponsable();
-            if (count($listaDeViajes) == 0) {
-                $cadenaViaje = ">>> El empleado no tiene viajes a su cargo.\n";
-            } else {
-                foreach ($listaDeViajes as $unViaje) {
-                    $cadenaViaje .= "DATOS DEL VIAJE ($i)
-                    Código del viaje: {$unViaje->getCodigoViaje()}
-                    Destino: {$unViaje->getDestino()}
-                    Capacidad de pasajeros: {$unViaje->getCapacidadPasajeros()}
-                    ";
-                    $i++;
-                }
-            }
-            return $cadenaViaje;
         }
     }
 ?>

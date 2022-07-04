@@ -6,6 +6,11 @@
         private $mensajeoperacion;
 
        
+
+        /**************************************/
+        /************     GET    **************/
+        /**************************************/
+
         public function getIdEmpresa() {
             return $this->idEmpresa;
         }
@@ -19,6 +24,11 @@
             return $this->mensajeoperacion;
         }
  
+        /**************************************/
+        /************     SET    **************/
+        /**************************************/
+
+
         public function setIdEmpresa($idEmpresa) {
             $this->idEmpresa = $idEmpresa;
         }
@@ -33,11 +43,19 @@
         }
 
         
+        /**************************************/
+        /************  CONSTRUCT **************/
+        /**************************************/
+
         public function __construct() {
             $this->idEmpresa = 0;
             $this->enombre = "";
             $this->edireccion = "";
         }
+
+        /**************************************/
+        /************   CARGAR   **************/
+        /**************************************/
 
         public function cargar($idEmpresa, $nombreEmpresa, $direccionEmpresa) {
             $this->setIdEmpresa($idEmpresa);
@@ -45,16 +63,27 @@
             $this->setEdireccion($direccionEmpresa);
         }
 
+
+        /**************************************/
+        /************  TOSTRING  **************/
+        /**************************************/
+
         public function __toString() {
-                $info = "
+               
+            $info = "
                 ***********EMPRESA **************
                 ID EMPRESA: {$this->getIdEmpresa()}
                 NOMBRE EMPRESA: {$this->getEnombre()}
                 DIRECCIÓN EMPRESA: {$this->getEdireccion()}
                 *********************************
                 ";
-                return $info;
+            return $info;
         }
+
+
+        /**************************************/
+        /************    BUSCAR  **************/
+        /**************************************/
 
         public function buscar($idEmpresa) {
             $baseDatos = new BaseDatos();
@@ -78,7 +107,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************    LISTAR  **************/
+        /**************************************/
+
         public function listar($condicion = "") {
             $arrayEmpresas = null;
             $base = new BaseDatos();
@@ -104,6 +136,10 @@
             return $arrayEmpresas;
         }
 
+        /**************************************/
+        /************  INSERTAR  **************/
+        /**************************************/
+
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
@@ -125,7 +161,10 @@
             return $resp;
         }
 
-        
+        /**************************************/
+        /************  MODIFCAR  **************/
+        /**************************************/
+
         public function modificar() {
             $resp = false; 
             $baseDatos = new BaseDatos();
@@ -144,7 +183,10 @@
             return $resp;
         }
         
-        
+        /**************************************/
+        /************   ELIMINAR  *************/
+        /**************************************/
+
         public function eliminar() {
             $baseDatos = new BaseDatos();
             $resp = false;
@@ -161,68 +203,7 @@
             return $resp;
         }
 
-        
-        public function listarViajesEmpresa() {
-            $arrayViajes = null;
-            $base = new BaseDatos();
-            $consulta = "SELECT * FROM viaje WHERE idempresa = ".$this->getIdEmpresa();    
-            if ($base->Iniciar()) {
-                if ($base->Ejecutar($consulta)) {
-                    $arrayViajes = array();
-                    while ($viaje = $base->Registro()) {
-                        $codigoViaje = $viaje['idviaje'];
-                        $destino = $viaje['vdestino'];
-                        $capacidadPasajeros = $viaje['vcantmaxpasajeros'];
-                        $idEmpresa = $viaje['idempresa'];
-                        $objResponsable = $viaje['rnumeroempleado'];
-                        $importe = $viaje['vimporte'];
-                        $tipoAsiento = $viaje['tipoAsiento'];
-                        $idayvuelta = $viaje['idayvuelta'];
-                        $viajeNew = new Viaje();
-                        $viajeNew->cargar($codigoViaje, $destino, $capacidadPasajeros, $idEmpresa, $objResponsable, $importe, $tipoAsiento, $idayvuelta);
-                        $arrayViajes[] = $viajeNew;
-                    }
-                } else {
-                    $this->setmensajeoperacion($base->getError());
-                }
-            } else {
-                $this->setmensajeoperacion($base->getError());
-            }
-            return $arrayViajes;
-        }
-
-        
-        function EliminarViajesEmpresa() {
-            $resp = false;
-            $listaDeViajes = $this->listarViajesEmpresa();
-            foreach ($listaDeViajes as $unViaje) {
-                $listaDePasajeros = $unViaje->listarPasajeros();
-                foreach ($listaDePasajeros as $unPasajero) {
-                    $unPasajero->Eliminar();
-                }
-                $unViaje->Eliminar();
-            }
-            return $resp;
-        }
-
-        
-        public function mostrarViajesEmpresa() {
-            $i = 1;
-            $info = "";
-            $listaDeViajes = $this->listarViajesEmpresa();
-            if (count($listaDeViajes) == 0) {
-                $info = " La empresa no tiene viajes \n";
-            } else {
-                foreach ($listaDeViajes as $unViaje) {
-                    $info .= "VIAJE ($i)
-                    Código del viaje: {$unViaje->getCodigoViaje()}
-                    Destino: {$unViaje->getDestino()}
-                    Capacidad de pasajeros: {$unViaje->getCapacidadPasajeros()}
-                    ";
-                    $i++;
-                }
-            }
-            return $info;
-        }
+       
+       
     }
 ?>

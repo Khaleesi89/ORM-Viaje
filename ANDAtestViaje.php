@@ -3,6 +3,9 @@
 
 //hice cambios en mi base para pueda cargar manualm las id...q eran autoincrement en la base original
     //EN MI BASE PRIMERO HAY QUE CREAR EMPERSA Y RESPONSABLE PARA CRAR LOS VIAJES Y VIAJES PARA CREAR PASAJEROS
+
+    //PARA USAR ESTE TEST HAY Q CAMBIAR EL NOMBRE DE LA CLASE ANDAVIAJE.PHP A VIAJE.PHP Y ASI FUNCIONARA 
+    
     include "BaseDatos.php";
     include "Viaje.php";
 	include "Responsable.php";
