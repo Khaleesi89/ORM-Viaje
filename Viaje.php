@@ -195,7 +195,10 @@ class Viaje{
 
         $consulta = "UPDATE viaje SET vdestino='{$this->getVDestino()}', 
         vcantmaxpasajeros={$this->getVCantidadMax()}, idempresa={$idEmpres}, 
-        rnumeroempleado={$idResp}, vimporte={$this->getVImporte()}, tipoAsiento='{$this->getTipoAsiento()}', idayvuelta='{$this->getIdaVuelta()}' WHERE idviaje={$this->getIdViaje()}";
+        rnumeroempleado={$idResp}, vimporte={$this->getVImporte()},
+         tipoAsiento='{$this->getTipoAsiento()}', idayvuelta='{$this->getIdaVuelta()}'
+          WHERE idviaje={$this->getIdViaje()}";
+          //echo $consulta;
         /*$consulta = "UPDATE viaje SET vdestino = {$this->getVdestino()}, vcantmaxpasajeros = {$this->getVCantidadMax()}, idempresa = {$idEmpres}, rnumeroempleado = {$idResp}, vimporte = {$this->getVimporte()}, tipoAsiento = '{$this->getTipoAsiento()}', idayvuelta = '{$this->getIdaVuelta()}' WHERE idviaje = {$this->getIdviaje()}";*/
         
        /* $consulta = "UPDATE viaje SET vdestino = '".$this->getVDestino()."',  vcantmaxpasajeros = ".$this->getVCantidadMax().",idempresa = ".$idEmpres.", rnumeroempleado = ".$idResp.",vimporte = ".$this->getVImporte().",tipoAsiento = ".$this->getTipoAsiento().",idayvuelta = '".$this->getIdaVuelta()."' WHERE idviaje = ".$this->getIdViaje(); */
@@ -322,6 +325,34 @@ class Viaje{
 		 }	
 		 return $resp;
 	}	
+
+    public function listarPasajeros() {
+        $arregloPasajeros = null;
+        $base = new BaseDatos();
+        $consulta = "SELECT * FROM pasajero WHERE idviaje = ".$this->getIdViaje();
+        $consulta .= " ORDER BY papellido";
+        if ($base->Iniciar()) {
+            if ($base->Ejecutar($consulta)) {
+                $arregloPasajeros = array();
+                while ($row2=$base->Registro()) {
+                    $dni = $row2['rdocumento'];
+                    $nombre = $row2['pnombre'];
+                    $apellido = $row2['papellido'];
+                    $telefono = $row2['ptelefono'];
+                    $idViaje = $row2['idviaje'];
+
+                    $pasajero = new Pasajero();
+                    $pasajero->cargar($dni, $nombre, $apellido, $telefono, $idViaje);
+                    array_push($arregloPasajeros, $pasajero);
+                }
+            } else {
+                $this->setMensajeError($base->getError());
+            }
+        } else {
+            $this->setMensajeError($base->getError());
+        }
+        return $arregloPasajeros;
+    }
 
     /**************************************/
     /************  TOSTRING  **************/

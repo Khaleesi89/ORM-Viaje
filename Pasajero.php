@@ -70,14 +70,14 @@
         /************   CARGAR   **************/
         /**************************************/
 
-        public function cargar($dni, $nombre, $apellido, $telefono, $idViaje) {		
+        public function cargar($dni, $nombre, $apellido, $telefono, $objViaje) {		
             $this->setDni($dni);
             $this->setNombre($nombre);
             $this->setApellido($apellido);
             $this->setTelefono($telefono);
-            $viaje = new Viaje();
-            $viaje->buscar($idViaje);
-            $this->setObjviaje($viaje);
+            //$viaje = new Viaje();
+            //$viaje->buscar($idViaje);
+            $this->setObjviaje($objViaje);
         }
 
 
@@ -172,14 +172,15 @@
         public function insertar() {
             $base = new BaseDatos();
             $resp = false;
-            $pasaj = new Pasajero();
-            $idViaje = $pasaj->getObjviaje();
+            $idViaje = $this->getObjviaje()->getIdViaje();
+            //echo $idViaje;
             $consultaInsertar = "INSERT INTO pasajero(rdocumento, pnombre, papellido, ptelefono, idviaje) 
                                 VALUES ('".$this->getDni()."',
                                         '".$this->getNombre()."',
                                         '".$this->getApellido()."',
                                         '".$this->getTelefono()."',
                                         '".$idViaje."')"; 
+            //echo $consultaInsertar;
             if ($base->Iniciar()) {
                 if ($base->Ejecutar($consultaInsertar)) {
                     $resp = true;

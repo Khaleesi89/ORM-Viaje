@@ -167,7 +167,7 @@
 							echo "Seleccione un viaje (por el ID): \n";
 							$nroViaje = trim(fgets(STDIN));
                             $empresa = new Empresa();
-							$encontrada = $empresa->buscar($nroViaje);
+							$encontrada = $viaje->buscar($nroViaje);
                             //echo $encontrada;
                             //die();
 							if ($encontrada == false) {
@@ -189,10 +189,12 @@
                         //$empresita = new Empresa();
                         echo mostrar($empresa->listar());
                         $idEmpr = trim(fgets(STDIN));
+                        $empresa->buscar($idEmpr);
                         echo "Elija al nuevo responsable del viaje \n";
                         $responsab = new Responsable();
                         echo mostrar($responsab->listar());
                         $idResp = trim(fgets(STDIN));
+                        $responsab->buscar($idResp);
 						//Se setean los nuevos datos del viaje
 
                         //$viaje->getIdViaje($nroViaje);
@@ -334,9 +336,9 @@
                                 }
                             
                             }else{
-                                if($viaje->getObjArrayPasajeros() != []){     
+                                if($viaje->getArrayObjPasajero() != []){     
                                     echo "Este viaje posee pasajeros- Serán eliminados del viaje";               
-                                    foreach($viaje->getObjArrayPasajeros() as $p){           
+                                    foreach($viaje->getArrayObjPasajero() as $p){           
                                         $p->Eliminar();                                       
                                     }                                                         
                                 }                                                             
@@ -540,6 +542,7 @@
                         echo mostrar($viaje->listar());
                         echo "Su elección: \n ";
                         $number = trim (fgets(STDIN));
+                        $viaje->buscar($number);
                         /*
                         //para verificar si este pasasjero esta en el viaje ya
                         $esta = abordo($dni,$number);
@@ -561,6 +564,7 @@
                                 echo "El pasajero ha sido insertado en la base de datos \n ";
                             }else{
                                 echo "El pasajero NO ha sido insertado en la base de datos \n ";
+                                echo $people->getmensajeoperacion();
                             }
                     }
                 
